@@ -42,6 +42,9 @@ class funcoesApi():
             url = video_data['url']
         except KeyError as e:
             return {'alerta': f'Campo ausente: {e.args[0]}'}
+        
+        if not titulo or not titulo.strip() or not descricao or not descricao.strip() or not url or not url.strip():
+            return {'alerta': 'Os campos devem ser preenchidos corretamente.'}
 
         if requests.get(url).status_code == 400:
             return {'alerta': 'URL indisponível'}
@@ -78,18 +81,14 @@ class funcoesApi():
         if not isinstance(video_data, dict):
             return {'erro': 'Dados inválidos. Esperado um dicionário JSON.'}
         try:
-            titulo = video_data['titulo']
-            descricao = video_data['descricao']
-            url = video_data['url']
+            titulo = str(video_data['titulo'])
+            descricao = str(video_data['descricao'])
+            url = str(video_data['url'])
         except KeyError as e:
             return {'alerta': f'Campo ausente: {e.args[0]}'}
 
-        if not titulo or not titulo.strip():
-            return {'alerta': 'O campo "titulo" deve ser preenchido.'}
-        if not descricao or not descricao.strip():
-            return {'alerta': 'O campo "descricao" deve ser preenchido.'}
-        if not url or not url.strip():
-            return {'alerta': 'O campo "url" deve ser preenchido.'}
+        if not titulo or not titulo.strip() or not descricao or not descricao.strip() or not url or not url.strip():
+            return {'alerta': 'Os campos devem ser preenchidos corretamente.'}
 
         if requests.get(url).status_code == 400:
             return {'alerta': 'URL indisponível'}
@@ -107,4 +106,3 @@ class funcoesApi():
             result = [dict(zip(column_names, row)) for row in rows]
             con.close()
             return result
-    

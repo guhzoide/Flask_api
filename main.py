@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return jsonify({"aviso": "'API NO AR'"})
+    """ Consulta status API """
+    return jsonify({"aviso": "API NO AR"})
 
 @app.route('/videos')
 def videos():
@@ -19,7 +20,7 @@ def getVideo(video_id):
     if request.method == "GET":
         result = funcoesApi.selecionarVideo(video_id)
         return jsonify(result)
-    
+
     elif request.method == "DELETE":
         result = funcoesApi.deletarVideo(video_id)
         return jsonify(result)
@@ -29,8 +30,8 @@ def getVideo(video_id):
         result = funcoesApi.autalizarVideo(video_id, video_data)
         return jsonify(result)
 
-@app.route('/addVideo', methods=['POST'])
-def addVideo():
+@app.route('/addVideos', methods=['POST'])
+def addVideos():
     """ Adicionando um novo vídeo """
     video_data = request.get_json()
     result = funcoesApi.adicionarVideo(video_data)
